@@ -1,4 +1,5 @@
 using MinhasFinancas;
+using MinhasFinancas.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<MoneyInflowService>();
 
 var app = builder.Build();
 

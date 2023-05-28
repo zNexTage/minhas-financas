@@ -2,29 +2,26 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MinhasFinancas.DTO.MoneyInflow;
 using MinhasFinancas.Models;
+using MinhasFinancas.Services;
 
 namespace MinhasFinancas.Controllers;
 
 [ApiController]
 [Route("[Controller]")]
 public class MoneyInflowController : ControllerBase{
-    private AppDbContext _appDbContext;
-    private IMapper _mapper;
+    private MoneyInflowService _moneyInflowService;
 
-    public MoneyInflowController(AppDbContext appDbContext, IMapper mapper)
+    public MoneyInflowController(MoneyInflowService moneyInflowService)
     {
-        _appDbContext = appDbContext;
-        _mapper = mapper;
+        _moneyInflowService = moneyInflowService;
     }
 
 
     [HttpPost("Register")]
     public IActionResult Register([FromBody] CreateMoneyInflowDto moneyInflowDto){
-        var moneyInflow = _mapper.Map<MoneyInflow>(moneyInflowDto);
-
-        _appDbContext.MoneyInflows.Add(moneyInflow);
-        _appDbContext.SaveChanges();
+        var moneyInflow = _moneyInflowService.Register(moneyInflowDto);
         
+        // TODO: Pass the URL to find the registered item
         return Created("", moneyInflow);
     }
 }
