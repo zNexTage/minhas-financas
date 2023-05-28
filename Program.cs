@@ -9,7 +9,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// My Configurations
 builder.Services.AddDbContext<AppDbContext>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 var app = builder.Build();
 
@@ -25,5 +29,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 app.Run();
