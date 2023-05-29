@@ -23,4 +23,14 @@ public class MoneyInflowService
 
         return moneyInflow;
     }
+
+    public ReadMoneyInflowDto GetById(int id){
+        var moneyInflow = _appDbContext.MoneyInflows.FirstOrDefault(moneyInflow => moneyInflow.Id == id);
+
+        if(moneyInflow == null) {
+            throw new MoneyInflow.DoesNotExists($"Não foi localizado uma entrada de id {id}");
+        }
+
+        return _mapper.Map<ReadMoneyInflowDto>(moneyInflow);
+    }
 }
