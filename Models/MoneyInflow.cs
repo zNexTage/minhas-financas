@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MinhasFinancas.Models;
 
-public class MoneyInflow //Entrada de dinheiro
+public class MoneyInflow : BaseModel //Entrada de dinheiro
 {
     [Key]
     [Required]
