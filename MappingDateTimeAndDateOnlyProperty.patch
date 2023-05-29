@@ -1,0 +1,19 @@
+diff --git a/Profiles/MoneyInflowProfile.cs b/Profiles/MoneyInflowProfile.cs
+index 390863a..39409f6 100644
+--- a/Profiles/MoneyInflowProfile.cs
++++ b/Profiles/MoneyInflowProfile.cs
+@@ -10,5 +10,14 @@ public class MoneyInflowProfile : Profile
+     public MoneyInflowProfile()
+     {
+         CreateMap<CreateMoneyInflowDto, MoneyInflow>();
++        
++        CreateMap<MoneyInflow, ReadMoneyInflowDto>()
++        .ForMember(dto => dto.Date,
++        opt => opt.MapFrom(source => DateOnly.FromDateTime(source.Date)));
++
++        CreateMap<ReadMoneyInflowDto, MoneyInflow>()
++       .ForMember(moneyInflow => moneyInflow.Date,
++        opt => opt.MapFrom(source => source.Date.ToDateTime(TimeOnly.MinValue)));
++        
+     }
+ }
