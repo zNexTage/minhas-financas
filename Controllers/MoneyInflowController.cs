@@ -8,7 +8,8 @@ namespace MinhasFinancas.Controllers;
 
 [ApiController]
 [Route("[Controller]")]
-public class MoneyInflowController : ControllerBase{
+public class MoneyInflowController : ControllerBase
+{
     private MoneyInflowService _moneyInflowService;
 
     public MoneyInflowController(MoneyInflowService moneyInflowService)
@@ -18,10 +19,25 @@ public class MoneyInflowController : ControllerBase{
 
 
     [HttpPost("Register")]
-    public IActionResult Register([FromBody] CreateMoneyInflowDto moneyInflowDto){
+    public IActionResult Register([FromBody] CreateMoneyInflowDto moneyInflowDto)
+    {
         var moneyInflow = _moneyInflowService.Register(moneyInflowDto);
         
-        // TODO: Pass the URL to find the registered item
-        return Created("", moneyInflow);
+        return CreatedAtAction(nameof(Get), new { id = moneyInflow.Id }, moneyInflow);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        try
+        {
+            var moneyInflow = _moneyInflowService.GetById(id);
+
+            return Ok(moneyInflow);
+        }
+        catch (MoneyInflow.DoesNotExists err)
+        {
+            return NotFound(err.Message);
+        }
     }
 }
