@@ -9,6 +9,8 @@ public class MoneyInflowProfile : Profile
 {
     public MoneyInflowProfile()
     {
-        CreateMap<CreateMoneyInflowDto, MoneyInflow>();
+        CreateMap<CreateMoneyInflowDto, MoneyInflow>();  
+
+        CreateMap<MoneyInflow, ReadMoneyInflowDto>();  
     }
 }
