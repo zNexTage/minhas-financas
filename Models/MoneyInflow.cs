@@ -17,5 +17,5 @@ public class MoneyInflow : BaseModel //Entrada de dinheiro
     public decimal Value { get; set; }
 
     [Required(ErrorMessage = "Informe a data que o dinheiro entrou")]
-    public DateTime Date { get; set; }
+    public DateOnly Date { get; set; }
 }
