@@ -27,4 +27,23 @@ public class AppDbContext : DbContext
 
         base.OnConfiguring(optionsBuilder);
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+
+        // We used the HasConversion method to store the "enum" string in database.
+        modelBuilder.Entity<MoneyOutflow>()
+            .Property(mo => mo.PaymentMethod)
+            .HasConversion(
+                pm => pm.Value,
+                v => new MoneyOutflow.PaymentMethods { Value = v })
+            .HasColumnName("PaymentMethod");
+        
+        modelBuilder.Entity<MoneyOutflow>()
+            .Property(mo => mo.PaymentCategory)
+            .HasConversion(
+                pc => pc.Value,
+                v => new MoneyOutflow.PaymentCategories { Value = v })
+            .HasColumnName("PaymentCategory");
+    }
 }
