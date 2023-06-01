@@ -13,8 +13,10 @@ public class MoneyInflow : BaseModel //Entrada de dinheiro
     [MaxLength(100)]
     public string Description { get; set; }
 
-    [Required(ErrorMessage = "Informe o valor da entrada")]
-    public decimal Value { get; set; }
+    [Required(ErrorMessage = "Informe o valor")]
+    [DataType(DataType.Currency)]
+    [Range(0.0, Double.MaxValue, ErrorMessage = "O campo deve ser maior que {1} e menor que {2}")]
+    public double Value { get; set; }
 
     [Required(ErrorMessage = "Informe a data que o dinheiro entrou")]
     public DateOnly Date { get; set; }
