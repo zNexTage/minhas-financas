@@ -23,11 +23,11 @@ public class MoneyInflowController : ControllerBase
     {
         var moneyInflow = _moneyInflowService.Register(moneyInflowDto);
         
-        return CreatedAtAction(nameof(Get), new { id = moneyInflow.Id }, moneyInflow);
+        return CreatedAtAction(nameof(GetById), new { id = moneyInflow.Id }, moneyInflow);
     }
 
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult GetById(int id)
     {
         try
         {
@@ -39,5 +39,10 @@ public class MoneyInflowController : ControllerBase
         {
             return NotFound(err.Message);
         }
+    }
+
+    [HttpGet]
+    public IActionResult GetAll(){
+        return Ok(_moneyInflowService.GetAll());
     }
 }

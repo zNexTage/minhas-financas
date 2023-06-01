@@ -33,4 +33,10 @@ public class MoneyInflowService
 
         return _mapper.Map<ReadMoneyInflowDto>(moneyInflow);
     }
+
+    public List<ReadMoneyInflowDto> GetAll(){
+        var moneyInfows = _appDbContext.MoneyInflows.ToList();
+
+        return _mapper.Map<List<ReadMoneyInflowDto>>(moneyInfows);
+    }
 }
