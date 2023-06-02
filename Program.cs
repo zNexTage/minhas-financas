@@ -16,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<MoneyInflowService>();
+builder.Services.AddScoped<MoneyOutflowService>();
 
 var app = builder.Build();
 

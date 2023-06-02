@@ -15,6 +15,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<MoneyInflow> MoneyInflows { get; set; }
+    public DbSet<MoneyOutflow> MoneyOutflows { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

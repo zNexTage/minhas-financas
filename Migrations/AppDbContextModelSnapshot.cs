@@ -77,7 +77,7 @@ namespace MinhasFinancas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MoneyOutflow");
+                    b.ToTable("MoneyOutflows");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,8 +11,8 @@ using MinhasFinancas;
 namespace MinhasFinancas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230531235849_CreateMoneyOutflowTable")]
-    partial class CreateMoneyOutflowTable
+    [Migration("20230602124957_CreateMoneyOutflowsTable")]
+    partial class CreateMoneyOutflowsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,8 +36,8 @@ namespace MinhasFinancas.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<decimal>("Value")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<double>("Value")
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -80,7 +80,7 @@ namespace MinhasFinancas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MoneyOutflow");
+                    b.ToTable("MoneyOutflows");
                 });
 #pragma warning restore 612, 618
         }

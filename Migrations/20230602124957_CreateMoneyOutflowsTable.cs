@@ -6,13 +6,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MinhasFinancas.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateMoneyOutflowTable : Migration
+    public partial class CreateMoneyOutflowsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<double>(
+                name: "Value",
+                table: "MoneyInflows",
+                type: "double",
+                nullable: false,
+                oldClrType: typeof(decimal),
+                oldType: "decimal(65,30)");
+
             migrationBuilder.CreateTable(
-                name: "MoneyOutflow",
+                name: "MoneyOutflows",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -30,7 +38,7 @@ namespace MinhasFinancas.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MoneyOutflow", x => x.Id);
+                    table.PrimaryKey("PK_MoneyOutflows", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
@@ -39,7 +47,15 @@ namespace MinhasFinancas.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MoneyOutflow");
+                name: "MoneyOutflows");
+
+            migrationBuilder.AlterColumn<decimal>(
+                name: "Value",
+                table: "MoneyInflows",
+                type: "decimal(65,30)",
+                nullable: false,
+                oldClrType: typeof(double),
+                oldType: "double");
         }
     }
 }
