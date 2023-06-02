@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using MinhasFinancas.DTO.CreateMoneyOutflowDto;
+using MinhasFinancas.DTO.MoneyOutflow;
 using MinhasFinancas.Models;
 
 namespace MinhasFinancas.Services;
@@ -23,5 +24,11 @@ public class MoneyOutflowService
         _appDbContext.SaveChanges();
 
         return moneyOutflow;
+    }
+
+    public List<ReadMoneyOutflowDto> GetAll(){
+        var moneyOutflows = _appDbContext.MoneyOutflows.ToList();
+
+        return _mapper.Map<List<ReadMoneyOutflowDto>>(moneyOutflows);
     }
 }

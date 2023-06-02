@@ -22,4 +22,9 @@ public class MoneyOutflowController : ControllerBase
 
         return Created("", moneyOutflow);
     }
+
+    [HttpGet]
+    public IActionResult GetAll(){
+        return Ok(_moneyOutflowService.GetAll());
+    }
 }
