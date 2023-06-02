@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using MinhasFinancas.DTO.CreateMoneyOutflowDto;
+using MinhasFinancas.Models;
 using MinhasFinancas.Services;
 
 namespace MinhasFinancas.Controllers;
@@ -26,5 +27,17 @@ public class MoneyOutflowController : ControllerBase
     [HttpGet]
     public IActionResult GetAll(){
         return Ok(_moneyOutflowService.GetAll());
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id){
+        try{
+            var moneyOutflow = _moneyOutflowService.GetById(id);
+
+            return Ok(moneyOutflow);
+        }
+        catch(MoneyOutflow.DoesNotExists err){
+            return NotFound(err.Message);
+        }
     }
 }

@@ -31,4 +31,12 @@ public class MoneyOutflowService
 
         return _mapper.Map<List<ReadMoneyOutflowDto>>(moneyOutflows);
     }
+
+    public ReadMoneyOutflowDto GetById(int id){
+        var moneyOutflow = _appDbContext.MoneyOutflows.FirstOrDefault(moneyOut => moneyOut.Id == id);
+
+        if(moneyOutflow == null) throw new MoneyOutflow.DoesNotExists($"Não foi encotrado um registro com id {id}");
+
+        return _mapper.Map<ReadMoneyOutflowDto>(moneyOutflow);
+    }
 }
