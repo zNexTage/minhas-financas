@@ -17,13 +17,13 @@ public class MoneyOutflowService
         _appDbContext = appDbContext;
     }
 
-    public MoneyOutflow Register(CreateMoneyOutflowDto moneyOutflowDto){
+    public ReadMoneyOutflowDto Register(CreateMoneyOutflowDto moneyOutflowDto){
         var moneyOutflow = _mapper.Map<MoneyOutflow>(moneyOutflowDto);
 
         _appDbContext.MoneyOutflows.Add(moneyOutflow);
         _appDbContext.SaveChanges();
 
-        return moneyOutflow;
+        return _mapper.Map<ReadMoneyOutflowDto>(moneyOutflow);
     }
 
     public List<ReadMoneyOutflowDto> GetAll(){

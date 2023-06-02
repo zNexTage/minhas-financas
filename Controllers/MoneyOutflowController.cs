@@ -21,7 +21,7 @@ public class MoneyOutflowController : ControllerBase
     public IActionResult Register([FromBody] CreateMoneyOutflowDto moneyOutflowDto){
         var moneyOutflow = _moneyOutflowService.Register(moneyOutflowDto);
 
-        return Created("", moneyOutflow);
+        return CreatedAtAction(nameof(GetById),  new { id = moneyOutflow.Id }, moneyOutflow);
     }
 
     [HttpGet]
