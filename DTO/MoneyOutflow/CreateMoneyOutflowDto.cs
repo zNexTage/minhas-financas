@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using MinhasFinancas.Models;
+using MinhasFinancas.Validations;
 
 namespace MinhasFinancas.DTO.CreateMoneyOutflowDto;
 
@@ -21,6 +22,7 @@ public class CreateMoneyOutflowDto
 
     [Required(ErrorMessage = "Informe o método de pagamento")]
     [StringLength(20)]
+    [PaymentMethodValidation]
     public string PaymentMethod { get; set; }
 
     [Required(ErrorMessage = "Informe o local do pagamento")]

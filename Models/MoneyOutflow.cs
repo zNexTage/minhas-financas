@@ -13,6 +13,15 @@ public class MoneyOutflow : BaseModel
         public static readonly PaymentMethods CREDIT = new PaymentMethods {Value = "Crédito"};
         public static readonly PaymentMethods PIX = new PaymentMethods {Value = "Pix"};
         public static readonly PaymentMethods MONEY = new PaymentMethods {Value = "Dinheiro"};
+
+        public static List<string> ToList(){
+            return new List<string>{
+                DEBIT.Value,
+                CREDIT.Value,
+                PIX.Value,
+                MONEY.Value
+            };
+        }
     }
 
     public class PaymentCategories {
@@ -42,6 +51,7 @@ public class MoneyOutflow : BaseModel
 
     [Required(ErrorMessage = "Informe o método de pagamento")]
     [MaxLength(20)]
+    // TODO: Create a custom validation to PaymentMethod
     public PaymentMethods PaymentMethod { get; set; }
 
     [Required(ErrorMessage = "Informe o local do pagamento")]
@@ -53,5 +63,6 @@ public class MoneyOutflow : BaseModel
 
     [Required(ErrorMessage = "Informe a categoria")]
     [MaxLength(50)]
+    // TODO: Create a custom validation to PaymentCategory
     public PaymentCategories PaymentCategory { get; set; }
 }
