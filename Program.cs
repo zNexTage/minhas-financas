@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using MinhasFinancas;
+using MinhasFinancas.Models;
 using MinhasFinancas.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,12 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<MoneyInflowService>();
 builder.Services.AddScoped<MoneyOutflowService>();
+
+builder.Services
+.AddIdentity<User, IdentityRole>()
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+
 
 var app = builder.Build();
 

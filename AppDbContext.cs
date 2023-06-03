@@ -1,11 +1,12 @@
 using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MinhasFinancas.Models;
 using MinhasFinancas.Settings.DbSettings;
 
 namespace MinhasFinancas;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<User>
 {
     private IConfiguration _configuration { get; set; }
 
@@ -46,5 +47,7 @@ public class AppDbContext : DbContext
                 pc => pc.Value,
                 v => new MoneyOutflow.PaymentCategories { Value = v })
             .HasColumnName("PaymentCategory");
+        
+        base.OnModelCreating(modelBuilder);
     }
 }
