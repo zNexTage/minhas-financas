@@ -34,5 +34,6 @@ public class CreateMoneyOutflowDto
 
     [Required(ErrorMessage = "Informe a categoria")]
     [StringLength(50)]
+    [PaymentCategoryValidation]
     public string PaymentCategory { get; set; }
 }
