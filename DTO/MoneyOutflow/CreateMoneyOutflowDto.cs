@@ -36,4 +36,7 @@ public class CreateMoneyOutflowDto
     [StringLength(50)]
     [PaymentCategoryValidation]
     public string PaymentCategory { get; set; }
+
+    [Required(ErrorMessage = "Informe o autor da saída do dinheiro")]
+    public string UserId {get;set;}
 }
