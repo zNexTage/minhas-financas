@@ -1,7 +1,11 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using MinhasFinancas;
 using MinhasFinancas.Models;
 using MinhasFinancas.Services;
+using MinhasFinancas.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +24,27 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<MoneyInflowService>();
 builder.Services.AddScoped<MoneyOutflowService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TokenService>();
 
+// Authentication configurations
 builder.Services
 .AddIdentity<User, IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
+
+var userSettings = builder.Configuration.GetSection(UserSettings.TOKEN_SESSSION_NAME).Get<UserSettings>();
+
+builder.Services.AddAuthentication(options => {
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(userSettings.TokenKey)),
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ClockSkew = TimeSpan.Zero,
+    };
+});
 
 
 var app = builder.Build();
