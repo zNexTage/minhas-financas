@@ -19,6 +19,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<MoneyInflowService>();
 builder.Services.AddScoped<MoneyOutflowService>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services
 .AddIdentity<User, IdentityRole>()
