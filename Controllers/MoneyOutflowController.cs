@@ -26,8 +26,16 @@ public class MoneyOutflowController : ControllerBase
 
     [HttpPost("Register")]
     [Authorize(AuthenticationSchemes = "Bearer")]
-    public IActionResult Register([FromBody] CreateMoneyOutflowDto moneyOutflowDto){
-        var moneyOutflow = _moneyOutflowService.Register(moneyOutflowDto);
+    public async Task<IActionResult> Register([FromBody] CreateMoneyOutflowDto moneyOutflowDto){
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if(userId == null){
+            return Unauthorized("É necessário autenticar-se para ter acesso às suas transações de saída de dinheiro.");
+        }
+
+        var user = await _userService.GetById(userId);
+        
+        var moneyOutflow = _moneyOutflowService.Register(moneyOutflowDto, user);
 
         return CreatedAtAction(nameof(GetById),  new { id = moneyOutflow.Id }, moneyOutflow);
     }

@@ -17,8 +17,10 @@ public class MoneyOutflowService
         _appDbContext = appDbContext;
     }
 
-    public ReadMoneyOutflowDto Register(CreateMoneyOutflowDto moneyOutflowDto){
+    public ReadMoneyOutflowDto Register(CreateMoneyOutflowDto moneyOutflowDto, User user){
         var moneyOutflow = _mapper.Map<MoneyOutflow>(moneyOutflowDto);
+        moneyOutflow.User = user;
+        moneyOutflow.UserId = user.Id;
 
         _appDbContext.MoneyOutflows.Add(moneyOutflow);
         _appDbContext.SaveChanges();
