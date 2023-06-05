@@ -48,6 +48,12 @@ public class AppDbContext : IdentityDbContext<User>
                 v => new MoneyOutflow.PaymentCategories { Value = v })
             .HasColumnName("PaymentCategory");
         
+        modelBuilder.Entity<User>()
+        .HasMany(u => u.MoneyOutflows)
+        .WithOne(mo => mo.User)
+        .HasForeignKey(mo => mo.UserId)
+        .IsRequired();
+        
         base.OnModelCreating(modelBuilder);
     }
 }

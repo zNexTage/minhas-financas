@@ -74,4 +74,10 @@ public class MoneyOutflow : BaseModel
     [MaxLength(50)]
     // TODO: Create a custom validation to PaymentCategory
     public PaymentCategories PaymentCategory { get; set; }
+    
+    public string UserId { get; set; } 
+
+    [Required(ErrorMessage = "É necessário identificar quem realizou essa saída de dinheiro")]
+    public virtual User User {get;set;}
+
 }
