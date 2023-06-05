@@ -18,7 +18,7 @@ public class TokenService
     }
     public string GenerateToken(User user){
         Claim[] claims = new Claim[] {
-            new Claim("id", user.Id)
+            new Claim(ClaimTypes.NameIdentifier, user.Id)
         };
 
         var key = new SymmetricSecurityKey(

@@ -17,4 +17,11 @@ public class User : IdentityUser
     public virtual ICollection<MoneyInflow> MoneyInflows { get; set; }
 
     public string Fullname { get => $"{FirstName} {LastName}"; }
+
+    public class DoesNotExists : Exception {
+        public DoesNotExists(string message) : base(message)
+        {
+            
+        }
+    }
 }

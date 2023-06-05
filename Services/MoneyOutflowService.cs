@@ -26,8 +26,9 @@ public class MoneyOutflowService
         return _mapper.Map<ReadMoneyOutflowDto>(moneyOutflow);
     }
 
-    public List<ReadMoneyOutflowDto> GetAll(){
-        var moneyOutflows = _appDbContext.MoneyOutflows.ToList();
+    public List<ReadMoneyOutflowDto> GetAll(string userId){
+        var moneyOutflows = _appDbContext.MoneyOutflows.ToList()
+        .Where(moneyOutflow => moneyOutflow.UserId == userId);
 
         return _mapper.Map<List<ReadMoneyOutflowDto>>(moneyOutflows);
     }
