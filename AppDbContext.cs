@@ -22,7 +22,9 @@ public class AppDbContext : IdentityDbContext<User>
     {
         var mySqlSettings = _configuration.GetSection(MySqlSettings.SESSION_NAME).Get<MySqlSettings>();
 
-        optionsBuilder.UseMySql(
+        optionsBuilder
+        .UseLazyLoadingProxies()
+        .UseMySql(
             mySqlSettings.ConnectionString,
             ServerVersion.AutoDetect(mySqlSettings.ConnectionString)
         );
@@ -32,6 +34,8 @@ public class AppDbContext : IdentityDbContext<User>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        
 
         // We used the HasConversion method to store the "enum" string in database.
         modelBuilder.Entity<MoneyOutflow>()
