@@ -1,4 +1,5 @@
 using System;
+using MinhasFinancas.DTO.User;
 
 namespace MinhasFinancas.DTO.MoneyOutflow;
 
@@ -14,4 +15,6 @@ public class ReadMoneyOutflowDto
     // TODO: Create a field to save the payment PDF.
     // public string PdfFile { get; set; }
     public string PaymentCategory { get; set; }
+
+    public ReadUserDto User { get; set; }
 }

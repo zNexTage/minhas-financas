@@ -16,6 +16,7 @@ public class MoneyOutflowProfile : Profile
 
         CreateMap<MoneyOutflow, ReadMoneyOutflowDto>()
         .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => src.PaymentMethod.Value))
-        .ForMember(dest => dest.PaymentCategory, opt => opt.MapFrom(src => src.PaymentCategory.Value));
+        .ForMember(dest => dest.PaymentCategory, opt => opt.MapFrom(src => src.PaymentCategory.Value))
+        .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
     }
 }
