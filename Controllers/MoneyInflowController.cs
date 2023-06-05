@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MinhasFinancas.DTO.MoneyInflow;
 using MinhasFinancas.Models;
@@ -17,7 +18,7 @@ public class MoneyInflowController : ControllerBase
         _moneyInflowService = moneyInflowService;
     }
 
-
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpPost("Register")]
     public IActionResult Register([FromBody] CreateMoneyInflowDto moneyInflowDto)
     {
@@ -26,6 +27,7 @@ public class MoneyInflowController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = moneyInflow.Id }, moneyInflow);
     }
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
@@ -41,6 +43,7 @@ public class MoneyInflowController : ControllerBase
         }
     }
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]
     public IActionResult GetAll(){
         return Ok(_moneyInflowService.GetAll());

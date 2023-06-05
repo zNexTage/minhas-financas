@@ -36,13 +36,15 @@ var userSettings = builder.Configuration.GetSection(UserSettings.TOKEN_SESSSION_
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(userSettings.TokenKey)),
         ValidateAudience = false,
         ValidateIssuer = false,
-        ClockSkew = TimeSpan.Zero,
+        ClockSkew = TimeSpan.Zero,        
     };
 });
 
@@ -58,10 +60,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
-
-
 
 app.Run();

@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MinhasFinancas.DTO.CreateMoneyOutflowDto;
 using MinhasFinancas.Models;
@@ -18,17 +19,20 @@ public class MoneyOutflowController : ControllerBase
     }
 
     [HttpPost("Register")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public IActionResult Register([FromBody] CreateMoneyOutflowDto moneyOutflowDto){
         var moneyOutflow = _moneyOutflowService.Register(moneyOutflowDto);
 
         return CreatedAtAction(nameof(GetById),  new { id = moneyOutflow.Id }, moneyOutflow);
     }
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]
     public IActionResult GetAll(){
         return Ok(_moneyOutflowService.GetAll());
     }
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet("{id}")]
     public IActionResult GetById(int id){
         try{
