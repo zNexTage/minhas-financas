@@ -51,4 +51,10 @@ public class UserService
 
         return _tokenService.GenerateToken(user);
     }
+
+    public async Task<User> GetById(string userId){
+        var user = await _userManager.FindByIdAsync(userId);
+
+        return user;
+    }
 }
