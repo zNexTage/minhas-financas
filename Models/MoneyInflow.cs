@@ -20,4 +20,9 @@ public class MoneyInflow : BaseModel //Entrada de dinheiro
 
     [Required(ErrorMessage = "Informe a data que o dinheiro entrou")]
     public DateOnly Date { get; set; }
+
+    public string UserId { get; set; } 
+
+    [Required(ErrorMessage = "É necessário identificar quem realizou essa entrada de dinheiro")]
+    public virtual User User { get; set; }
 }
