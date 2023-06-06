@@ -38,10 +38,12 @@ public class MoneyOutflowController : ControllerBase
 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]
-    public async Task<IActionResult> GetAll(){
+    public IActionResult GetAll(){
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
-        return Ok(_moneyOutflowService.GetAll(userId));
+        var moneyOutflows = _moneyOutflowService.GetAll(userId);
+
+        return Ok(moneyOutflows);
     }
 
     [Authorize(AuthenticationSchemes = "Bearer")]
