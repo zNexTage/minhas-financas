@@ -11,6 +11,7 @@ public class MoneyInflowProfile : Profile
     {
         CreateMap<CreateMoneyInflowDto, MoneyInflow>();  
 
-        CreateMap<MoneyInflow, ReadMoneyInflowDto>();  
+        CreateMap<MoneyInflow, ReadMoneyInflowDto>()
+        .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
     }
 }

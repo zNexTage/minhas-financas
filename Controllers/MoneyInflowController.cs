@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +13,23 @@ namespace MinhasFinancas.Controllers;
 public class MoneyInflowController : ControllerBase
 {
     private MoneyInflowService _moneyInflowService;
+    private UserService _userService;
 
-    public MoneyInflowController(MoneyInflowService moneyInflowService)
+    public MoneyInflowController(MoneyInflowService moneyInflowService, UserService userService)
     {
         _moneyInflowService = moneyInflowService;
+        _userService = userService;
     }
 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpPost("Register")]
-    public IActionResult Register([FromBody] CreateMoneyInflowDto moneyInflowDto)
+    public async Task<IActionResult> Register([FromBody] CreateMoneyInflowDto moneyInflowDto)
     {
-        var moneyInflow = _moneyInflowService.Register(moneyInflowDto);
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        var user = await _userService.GetById(userId);
+        
+        var moneyInflow = _moneyInflowService.Register(moneyInflowDto, user);
         
         return CreatedAtAction(nameof(GetById), new { id = moneyInflow.Id }, moneyInflow);
     }
@@ -31,9 +38,15 @@ public class MoneyInflowController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
         try
         {
             var moneyInflow = _moneyInflowService.GetById(id);
+
+            if(moneyInflow.User.Id != userId){
+                return Unauthorized("Você não tem acesso a essa transação");
+            }
 
             return Ok(moneyInflow);
         }
@@ -46,6 +59,8 @@ public class MoneyInflowController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]
     public IActionResult GetAll(){
-        return Ok(_moneyInflowService.GetAll());
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        return Ok(_moneyInflowService.GetAll(userId));
     }
 }

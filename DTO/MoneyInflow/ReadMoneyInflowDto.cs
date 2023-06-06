@@ -1,4 +1,5 @@
 using System;
+using MinhasFinancas.DTO.User;
 
 namespace MinhasFinancas.DTO.MoneyInflow;
 
@@ -9,4 +10,6 @@ public class ReadMoneyInflowDto
     public decimal Value { get; set; }
 
     public DateOnly Date { get; set; }
+
+    public ReadUserDto User { get; set; }
 }

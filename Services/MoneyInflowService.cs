@@ -15,13 +15,15 @@ public class MoneyInflowService
         _mapper = mapper;
         _appDbContext = appDbContext;
     }
-    public MoneyInflow Register(CreateMoneyInflowDto moneyInflowDto){
+    public ReadMoneyInflowDto Register(CreateMoneyInflowDto moneyInflowDto, User user){
         var moneyInflow = _mapper.Map<MoneyInflow>(moneyInflowDto);
+        moneyInflow.User = user;
+        moneyInflow.UserId = user.Id;
 
         _appDbContext.MoneyInflows.Add(moneyInflow);
         _appDbContext.SaveChanges();
 
-        return moneyInflow;
+        return _mapper.Map<ReadMoneyInflowDto>(moneyInflow);
     }
 
     public ReadMoneyInflowDto GetById(int id){
@@ -34,8 +36,9 @@ public class MoneyInflowService
         return _mapper.Map<ReadMoneyInflowDto>(moneyInflow);
     }
 
-    public List<ReadMoneyInflowDto> GetAll(){
-        var moneyInfows = _appDbContext.MoneyInflows.ToList();
+    public List<ReadMoneyInflowDto> GetAll(string userId){
+        var moneyInfows = _appDbContext.MoneyInflows.ToList()
+        .Where(mi => mi.UserId == userId);
 
         return _mapper.Map<List<ReadMoneyInflowDto>>(moneyInfows);
     }
