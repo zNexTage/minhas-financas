@@ -27,11 +27,7 @@ public class MoneyOutflowController : ControllerBase
     [HttpPost("Register")]
     [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Register([FromBody] CreateMoneyOutflowDto moneyOutflowDto){
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if(userId == null){
-            return Unauthorized("É necessário autenticar-se para ter acesso às suas transações de saída de dinheiro.");
-        }
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
         var user = await _userService.GetById(userId);
         
@@ -43,11 +39,7 @@ public class MoneyOutflowController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]
     public async Task<IActionResult> GetAll(){
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if(userId == null){
-            return Unauthorized("É necessário autenticar-se para ter acesso às suas transações de saída de dinheiro.");
-        }
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
         return Ok(_moneyOutflowService.GetAll(userId));
     }
@@ -55,11 +47,7 @@ public class MoneyOutflowController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet("{id}")]
     public IActionResult GetById(int id){
-         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if(userId == null){
-            return Unauthorized("É necessário autenticar-se para ter acesso às suas transações de saída de dinheiro.");
-        }
+         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
         try{            
             var moneyOutflow = _moneyOutflowService.GetById(id);
