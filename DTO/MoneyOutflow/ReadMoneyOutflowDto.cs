@@ -17,4 +17,6 @@ public class ReadMoneyOutflowDto
     public string PaymentCategory { get; set; }
 
     public ReadUserDto User { get; set; }
+
+    public DateOnly Date { get; set; }
 }

@@ -74,6 +74,9 @@ public class MoneyOutflow : BaseModel
     [MaxLength(50)]
     // TODO: Create a custom validation to PaymentCategory
     public PaymentCategories PaymentCategory { get; set; }
+
+    [Required(ErrorMessage = "Informe a data que o dinheiro saiu")]
+    public DateOnly Date { get; set; }
     
     public string UserId { get; set; } 
 

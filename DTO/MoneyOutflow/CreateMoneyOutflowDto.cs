@@ -38,4 +38,7 @@ public class CreateMoneyOutflowDto
     public string PaymentCategory { get; set; }
 
     // public string UserId {get;set;}
+
+    [Required(ErrorMessage = "Informe a data em que o gasto foi realizado")]
+    public DateOnly Date { get; set; }
 }
