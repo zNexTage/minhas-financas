@@ -49,7 +49,7 @@ public class MoneyOutflowController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet("{id}")]
     public IActionResult GetById(int id){
-         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
         try{            
             var moneyOutflow = _moneyOutflowService.GetById(id);
@@ -63,5 +63,13 @@ public class MoneyOutflowController : ControllerBase
         catch(MoneyOutflow.DoesNotExists err){
             return NotFound(err.Message);
         }
+    }
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet("TotalByPeriod")]    
+    public IActionResult GetTotalByPeriod([FromQuery] int month, [FromQuery] int year){
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        return Ok(_moneyOutflowService.GetTotalByPeriod(userId, month, year));
     }
 }

@@ -55,4 +55,16 @@ public class MoneyOutflowService
 
         return _mapper.Map<ReadMoneyOutflowDto>(moneyOutflow);
     }
+
+    ///<summary>
+    /// Get the total of money outflows from a logged user in a determined period.
+    ///</summary>
+    public double GetTotalByPeriod(string userId, int month, int year){        
+        double total = _appDbContext.MoneyOutflows
+        .Where(moneyOutflow => moneyOutflow.UserId == userId &&
+        moneyOutflow.Date.Month == month && moneyOutflow.Date.Year == year)
+        .Sum(moneyOutflow => moneyOutflow.Value * moneyOutflow.Quantity);
+
+        return total;
+    }
 }
