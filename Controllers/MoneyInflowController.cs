@@ -63,4 +63,14 @@ public class MoneyInflowController : ControllerBase
 
         return Ok(_moneyInflowService.GetAll(userId, month, year));
     }
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet("TotalByPeriod")]
+    public IActionResult GetTotalByPeriod([FromQuery] int month, [FromQuery] int year){
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        var total = _moneyInflowService.GetTotalByPeriod(userId, month, year);
+
+        return Ok(total);
+    }
 }
