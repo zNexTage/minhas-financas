@@ -58,9 +58,9 @@ public class MoneyInflowController : ControllerBase
 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]
-    public IActionResult GetAll(){
+    public IActionResult GetAll([FromQuery] int? month, [FromQuery] int? year){
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
-        return Ok(_moneyInflowService.GetAll(userId));
+        return Ok(_moneyInflowService.GetAll(userId, month, year));
     }
 }

@@ -27,10 +27,23 @@ public class MoneyOutflowService
 
         return _mapper.Map<ReadMoneyOutflowDto>(moneyOutflow);
     }
+    
+    /// <summary>
+    /// Get all MoneyOutflow from the logged user and filtering by month and year.
+    /// if the month or year is empty, it will be set with the current month and year
+    /// </summary>
+    public List<ReadMoneyOutflowDto> GetAll(string userId, int? month, int? year){
+        if(month == null){
+            month = DateTime.Now.Month;
+        }
 
-    public List<ReadMoneyOutflowDto> GetAll(string userId){
+        if(year == null){
+            year = DateTime.Now.Year;
+        }
+        
         var moneyOutflows = _appDbContext.MoneyOutflows.ToList()
-        .Where(moneyOutflow => moneyOutflow.UserId == userId);
+        .Where(moneyOutflow => moneyOutflow.UserId == userId 
+        && moneyOutflow.Date.Month == month && moneyOutflow.Date.Year == year);
 
         return _mapper.Map<List<ReadMoneyOutflowDto>>(moneyOutflows);
     }

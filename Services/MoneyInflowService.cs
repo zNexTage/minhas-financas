@@ -15,7 +15,8 @@ public class MoneyInflowService
         _mapper = mapper;
         _appDbContext = appDbContext;
     }
-    public ReadMoneyInflowDto Register(CreateMoneyInflowDto moneyInflowDto, User user){
+    public ReadMoneyInflowDto Register(CreateMoneyInflowDto moneyInflowDto, User user)
+    {
         var moneyInflow = _mapper.Map<MoneyInflow>(moneyInflowDto);
         moneyInflow.User = user;
         moneyInflow.UserId = user.Id;
@@ -26,20 +27,39 @@ public class MoneyInflowService
         return _mapper.Map<ReadMoneyInflowDto>(moneyInflow);
     }
 
-    public ReadMoneyInflowDto GetById(int id){
+    public ReadMoneyInflowDto GetById(int id)
+    {
         var moneyInflow = _appDbContext.MoneyInflows.FirstOrDefault(moneyInflow => moneyInflow.Id == id);
 
-        if(moneyInflow == null) {
+        if (moneyInflow == null)
+        {
             throw new MoneyInflow.DoesNotExists($"Não foi localizado uma entrada de id {id}");
         }
 
         return _mapper.Map<ReadMoneyInflowDto>(moneyInflow);
     }
+    ///<summary>
+    /// Get all MoneyInflow from the logged user filtering by month and year;
+    /// if the month or year is empty, it will be set with the current month and year
+    ///</summary>
+    public List<ReadMoneyInflowDto> GetAll(string userId, int? month, int? year)
+    {
+        if (month == null)
+        {
+            month = DateTime.Now.Month;
+        }
 
-    public List<ReadMoneyInflowDto> GetAll(string userId){
-        var moneyInfows = _appDbContext.MoneyInflows.ToList()
-        .Where(mi => mi.UserId == userId);
+        if (year == null)
+        {
+            year = DateTime.Now.Year;
+        }
 
-        return _mapper.Map<List<ReadMoneyInflowDto>>(moneyInfows);
+        var moneyInflows = _appDbContext.MoneyInflows.ToList()
+        .Where(mi => mi.UserId == userId &&
+        mi.Date.Month == month &&
+        mi.Date.Year == year
+        );
+
+        return _mapper.Map<List<ReadMoneyInflowDto>>(moneyInflows);
     }
 }
