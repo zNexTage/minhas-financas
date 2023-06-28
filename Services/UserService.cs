@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using Backend.DTO.Token;
 using Microsoft.AspNetCore.Identity;
 using MinhasFinancas.DTO.User;
 using MinhasFinancas.Models;
@@ -33,7 +34,7 @@ public class UserService
         return await _userManager.CreateAsync(user, userDto.Password);
     }
 
-    public async Task<string> Login(LoginUserDto loginUserDto){
+    public async Task<ReadTokenDto> Login(LoginUserDto loginUserDto){
         var result = await _signInManager.PasswordSignInAsync(
             loginUserDto.Username, 
             loginUserDto.Password,

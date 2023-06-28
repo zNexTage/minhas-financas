@@ -34,9 +34,9 @@ public class UserController : ControllerBase
     {
         try
         {
-            string token = await _userService.Login(loginUser);
+            var tokenDto = await _userService.Login(loginUser);
 
-            return Ok(token);
+            return Ok(tokenDto);
         }
         catch (Exception err)
         {
