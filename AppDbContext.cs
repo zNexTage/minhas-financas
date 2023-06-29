@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MinhasFinancas.Enum;
 using MinhasFinancas.Models;
 using MinhasFinancas.Settings.DbSettings;
 
@@ -49,7 +50,7 @@ public class AppDbContext : IdentityDbContext<User>
             .Property(mo => mo.PaymentCategory)
             .HasConversion(
                 pc => pc.Value,
-                v => new MoneyOutflow.PaymentCategories { Value = v })
+                v => new PaymentCategories { Value = v })
             .HasColumnName("PaymentCategory");
 
         modelBuilder.Entity<User>()
