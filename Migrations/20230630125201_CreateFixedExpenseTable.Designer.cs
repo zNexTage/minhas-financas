@@ -11,7 +11,7 @@ using MinhasFinancas;
 namespace MinhasFinancas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230628122146_CreateFixedExpenseTable")]
+    [Migration("20230630125201_CreateFixedExpenseTable")]
     partial class CreateFixedExpenseTable
     {
         /// <inheritdoc />
@@ -151,6 +151,37 @@ namespace MinhasFinancas.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MinhasFinancas.Models.FixedExpense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("PaymentCategory")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("PaymentCategory");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FixedExpenses");
                 });
 
             modelBuilder.Entity("MinhasFinancas.Models.MoneyInflow", b =>
@@ -352,6 +383,17 @@ namespace MinhasFinancas.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MinhasFinancas.Models.FixedExpense", b =>
+                {
+                    b.HasOne("MinhasFinancas.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MinhasFinancas.Models.MoneyInflow", b =>
