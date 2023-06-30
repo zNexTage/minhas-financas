@@ -19,6 +19,8 @@ public class AppDbContext : IdentityDbContext<User>
     public DbSet<MoneyInflow> MoneyInflows { get; set; }
     public DbSet<MoneyOutflow> MoneyOutflows { get; set; }
 
+    public DbSet<FixedExpense> FixedExpenses {get;set;}
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var mySqlSettings = _configuration.GetSection(MySqlSettings.SESSION_NAME).Get<MySqlSettings>();
@@ -34,9 +36,7 @@ public class AppDbContext : IdentityDbContext<User>
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-
-        
+    {       
 
         // We used the HasConversion method to store the "enum" string in database.
         modelBuilder.Entity<MoneyOutflow>()
@@ -64,6 +64,14 @@ public class AppDbContext : IdentityDbContext<User>
         .WithOne(mi => mi.User)
         .HasForeignKey(mi => mi.UserId)
         .IsRequired();
+
+        modelBuilder.Entity<FixedExpense>()
+        .Property(fixedExpense => fixedExpense.PaymentCategory)
+        .HasConversion(
+            category => category.Value,
+            value => new PaymentCategories {Value = value}
+        )
+        .HasColumnName("PaymentCategory");
 
 
         base.OnModelCreating(modelBuilder);

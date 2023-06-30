@@ -26,6 +26,7 @@ builder.Services.AddScoped<MoneyInflowService>();
 builder.Services.AddScoped<MoneyOutflowService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<FixedExpenseService>();
 
 // Authentication configurations
 builder.Services
