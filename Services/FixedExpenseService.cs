@@ -27,4 +27,12 @@ public class FixedExpenseService
 
         return _mapper.Map<ReadFixedExpenseDto>(fixedExpense);
     }
+
+    public IEnumerable<ReadFixedExpenseDto> GetAll(string userId){
+        var fixedExpenses = _appDbContext.FixedExpenses
+        .Where(fixedExpense => fixedExpense.UserId == userId)
+        .ToList();
+
+        return _mapper.Map<List<ReadFixedExpenseDto>>(fixedExpenses);
+    }
 }

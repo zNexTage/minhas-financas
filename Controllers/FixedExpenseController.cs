@@ -34,4 +34,16 @@ public class FixedExpenseController : ControllerBase
 
         return Created("", fixedExpense);
     }
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet]
+    public async Task<IActionResult> GetAll(){
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        var user = await _userService.GetById(userId);
+
+        var fixedExpenses = _fixedExpenseService.GetAll(user.Id);
+
+        return Ok(fixedExpenses);
+    }
 }
