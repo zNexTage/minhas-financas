@@ -11,19 +11,16 @@ namespace MinhasFinancas.Services;
 
 public class TokenService
 {
-    private UserSettings _userSettings;
-
-    public TokenService(IConfiguration config)
-    {
-        _userSettings = config.GetSection(UserSettings.TOKEN_SESSSION_NAME).Get<UserSettings>();
-    }
+ 
     public ReadTokenDto GenerateToken(User user){
+        var tokenKey = Environment.GetEnvironmentVariable("TOKEN_KEY");
+
         Claim[] claims = new Claim[] {
             new Claim(ClaimTypes.NameIdentifier, user.Id)
         };
 
         var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_userSettings.TokenKey)
+            Encoding.UTF8.GetBytes(tokenKey!)
         );
 
         var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

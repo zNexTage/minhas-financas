@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mysql:8.0.33
+    restart: always
+    env_file:
+      - .env 
+    expose:
+      - 3307
+    volumes:
+      - my-db:/var/lib/mysql
+  minhasfinancas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+      - 8081:443
+    env_file:
+      - .env      
+    volumes:
+      #- /home/${USER}/.microsoft/usersecrets:/root/.microsoft/usersecrets/:ro  # Get User secrets file    
+      - ${ASPNETCORE_Kestrel__Certificates__Default__Path}:${ASPNETCORE_Kestrel__Certificates__Default__Path}
+    depends_on:
+      - db
+    command: bash -c 'while !</dev/tcp/db/3307; do sleep 1; done; dotnet MinhasFinancas.dll'
+volumes:
+  my-db:  
+    
