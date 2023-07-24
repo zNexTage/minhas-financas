@@ -22,18 +22,8 @@ public class AppDbContext : IdentityDbContext<User>
     public DbSet<FixedExpense> FixedExpenses {get;set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // Instead UserSecrets, it's gonna be using env var.
-        // var mySqlSettings = _configuration.GetSection(MySqlSettings.SESSION_NAME).Get<MySqlSettings>();
-        
-        // TODO: There is a better way to load the env vars?
-        var dbName = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
-        var dbUser = Environment.GetEnvironmentVariable("MYSQL_USER");
-        var dbPassword = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
-        var dbPort = Environment.GetEnvironmentVariable("MYSQL_TCP_PORT");
-        var dbServer = Environment.GetEnvironmentVariable("MYSQL_SERVER_NAME");
-        Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
-        var connectionString = $"Server={dbServer};Port={dbPort};Database={dbName};User={dbUser};Password={dbPassword};";       
+    {            
+        var connectionString = _configuration.GetConnectionString("MysqlConnectionString");
 
         optionsBuilder
         .UseLazyLoadingProxies()
