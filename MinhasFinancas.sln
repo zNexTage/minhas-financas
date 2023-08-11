@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinhasFinancas", "MinhasFinancas.csproj", "{6745E23A-4AFB-4DF5-8ECC-BE4EF29E9EC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinhasFinancasClient", "MinhasFinancasClient\MinhasFinancasClient.csproj", "{9469D9FF-A3B9-4F57-A212-665E40F4930D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{6745E23A-4AFB-4DF5-8ECC-BE4EF29E9EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6745E23A-4AFB-4DF5-8ECC-BE4EF29E9EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6745E23A-4AFB-4DF5-8ECC-BE4EF29E9EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9469D9FF-A3B9-4F57-A212-665E40F4930D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9469D9FF-A3B9-4F57-A212-665E40F4930D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9469D9FF-A3B9-4F57-A212-665E40F4930D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9469D9FF-A3B9-4F57-A212-665E40F4930D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
