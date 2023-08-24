@@ -11,9 +11,15 @@ namespace MinhasFinancas.Services;
 
 public class TokenService
 {
+    private IConfiguration _configuration;
+
+    public TokenService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
  
     public ReadTokenDto GenerateToken(User user){
-        var tokenKey = Environment.GetEnvironmentVariable("TOKEN_KEY");
+        var tokenKey = _configuration["TokenSettings:TokenKey"];
 
         Claim[] claims = new Claim[] {
             new Claim(ClaimTypes.NameIdentifier, user.Id)

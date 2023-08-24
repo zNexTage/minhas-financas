@@ -40,7 +40,7 @@ builder.Services
 .AddDefaultTokenProviders();
 
 //var userSettings = builder.Configuration.GetSection(UserSettings.TOKEN_SESSSION_NAME).Get<UserSettings>();
-var tokenKey = Environment.GetEnvironmentVariable("TOKEN_KEY");
+var tokenKey = builder.Configuration["TokenSettings:TokenKey"];
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,7 +49,7 @@ builder.Services.AddAuthentication(options => {
 }).AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jhuy445@!*()dshn587ch4gsa!@kjNV[]cbvZ58749")),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
         ValidateAudience = false,
         ValidateIssuer = false,
         ClockSkew = TimeSpan.Zero,        
